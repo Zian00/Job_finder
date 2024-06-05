@@ -11,7 +11,9 @@ const JobListings = ({ isHome = false }) => {
 			const apiUrl = isHome ? '/api/jobs?_limit=3' : '/api/jobs';
 			try {
 				const res = await fetch(apiUrl);
+				// console.log(res)
 				const data = await res.json();
+				// console.log(data)
 				setJobs(data);
 			} catch (error) {
 				console.log('Error here:', error);
@@ -20,7 +22,7 @@ const JobListings = ({ isHome = false }) => {
 			}
 		};
 		fetchJobs();
-	});
+	},[]);
 
 	return (
 		<section className='bg-blue-50 px-4 py-10'>

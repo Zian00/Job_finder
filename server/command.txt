@@ -1,2 +1,4 @@
 conda activate
 source activate jfVenv
+
+npx nodemon routes.py

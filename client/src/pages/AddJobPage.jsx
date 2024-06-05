@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {toast} from 'react-toastify' 
-
+// import 
 
 const AddJobPage = ({addJobSubmit}) => {
 	const [title, setTitle] = useState();
@@ -33,8 +33,8 @@ const AddJobPage = ({addJobSubmit}) => {
         }
 		// getting required data and stored in newJob then passed into addJob function in app.jsx for api call
 		addJobSubmit(newJob);
-		toast.success('Job added successfully');
-		return navigate('/jobs');
+		// toast.success('Job added successfully');
+		// return navigate('/jobs');
     }
 
 	return (
