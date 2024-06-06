@@ -76,10 +76,12 @@ const JobPage = ({ deleteJob }) => {
 									Company Info
 								</h3>
 
-								<h2 className='text-2xl'>{job.company.name}</h2>
+								{/* <h2 className='text-2xl'>{job.company.name}</h2> */}
+								<h2 className='text-2xl'>{job.name}</h2>
 
 								<p className='my-2'>
-									{job.company.description}
+									{/* {job.company.description} */}
+									{job.description}
 								</p>
 
 								<hr className='my-4' />
@@ -87,13 +89,15 @@ const JobPage = ({ deleteJob }) => {
 								<h3 className='text-xl'>Contact Email:</h3>
 
 								<p className='my-2 bg-indigo-100 p-2 font-bold'>
-									{job.company.contactEmail}
+									{/* {job.company.contactEmail} */}
+									{job.contactEmail}
 								</p>
 
 								<h3 className='text-xl'>Contact Phone:</h3>
 
 								<p className='my-2 bg-indigo-100 p-2 font-bold'>
-									{job.company.contactPhone}
+									{/* {job.company.contactPhone} */}
+									{job.contactPhone}
 								</p>
 							</div>
 
@@ -125,7 +129,9 @@ const JobPage = ({ deleteJob }) => {
 
 const jobLoader = async ({ params }) => {
 	const res = await fetch(`/api/jobs/${params.id}`);
+	// console.log(res);
 	const data = await res.json();
+	// console.log(data)
 	return data;
 };
 

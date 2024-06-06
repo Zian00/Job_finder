@@ -5,6 +5,10 @@ import sqlite3
 app = Flask(__name__)
 cors = CORS(app, origin='*')
 
+def get_db_connection():
+    conn = sqlite3.connect('jobs.db')
+    conn.row_factory = sqlite3.Row  # This allows dictionary-like access to rows
+    return conn
 
 def create_database():
     conn = sqlite3.connect('jobs.db')
@@ -42,7 +46,7 @@ def index():
 
 @app.route('/jobs', methods=['GET'], strict_slashes=False)
 def getAllJobs():
-    conn = sqlite3.connect('jobs.db')
+    conn = get_db_connection()
     cur = conn.cursor()
     cur.execute('''SELECT
                         c.name,
@@ -61,14 +65,21 @@ def getAllJobs():
 
     data = cur.fetchall()
     data_result = []
-
     for row in data:
-        row_dict = {}
-        for i, value in enumerate(row):
-            column_name = cur.description[i][0]
-            row_dict[column_name] = value
+        row_dict = {key: row[key] for key in row.keys()}
         data_result.append(row_dict)
+    print(data_result)
+
+
+    # for row in data:
+    #     row_dict = {}
+    #     for i, value in enumerate(row):
+    #         column_name = cur.description[i][0]
+    #         row_dict[column_name] = value
+    #     data_result.append(row_dict)
+
     # print(data_result)
+
 
     conn.close()
 
@@ -114,6 +125,42 @@ def addJob():
             conn.close()
         print("The SQLite connection is closed")
         return "New data recorded"
+
+
+@app.route('/jobs/<int:id>', methods=['GET'], strict_slashes=False)
+def getJobById(id):
+    try:
+        conn = sqlite3.connect('jobs.db')
+        conn.row_factory = sqlite3.Row
+
+        cur = conn.cursor()
+        cur.execute('''SELECT
+                        c.name,
+                        c.description,
+                        c.contactEmail,
+                        c.contactPhone,
+                        j.id,
+                        j.title,
+                        j.type,
+                        j.location,
+                        j.description,
+                        j.salary
+                    FROM
+                        companies c
+                        join jobs j on j.companyId = c.id
+                    WHERE 
+                        j.id = ? ;''', (id,))
+        row = cur.fetchone()
+        if row:
+            row_dict = {key: row[key] for key in row.keys()}    
+
+    except sqlite3.Error as error:
+        print("Failed to get job data by id\n", error)
+    finally:
+        if conn:
+            conn.close()
+            print("The SQLite connection is closed")
+            return row_dict
 
 
 if __name__ == '__main__':
