@@ -66,9 +66,14 @@ def getAllJobs():
     data = cur.fetchall()
     data_result = []
     for row in data:
-        row_dict = {key: row[key] for key in row.keys()}
-        data_result.append(row_dict)
-    print(data_result)
+        print(row)
+        print(dict(row))
+        data_result.append(dict(row))
+
+    # for row in data:
+    #     row_dict = {key: row[key] for key in row.keys()}
+    #     data_result.append(row_dict)
+    # print(data_result)
 
 
     # for row in data:
@@ -151,8 +156,11 @@ def getJobById(id):
                     WHERE 
                         j.id = ? ;''', (id,))
         row = cur.fetchone()
-        if row:
-            row_dict = {key: row[key] for key in row.keys()}    
+        print(row)
+        # if row:
+        #     row_dict = {key: row[key] for key in row.keys()} 
+        row_dict = dict(row)
+        print(row_dict)
 
     except sqlite3.Error as error:
         print("Failed to get job data by id\n", error)
