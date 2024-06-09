@@ -14,7 +14,7 @@ cursor.execute('''
 CREATE TABLE IF NOT EXISTS companies (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
-    description TEXT NOT NULL,
+    companyDescription TEXT NOT NULL,
     contactEmail TEXT NOT NULL,
     contactPhone TEXT NOT NULL
 )''')
@@ -36,7 +36,7 @@ for job in data['jobs']:
     # Insert company data and get company id
     company = job['company']
     cursor.execute('''
-    INSERT INTO companies (name, description, contactEmail, contactPhone)
+    INSERT INTO companies (name, companyDescription, contactEmail, contactPhone)
     VALUES (?, ?, ?, ?)''', (company['name'], company['description'], company['contactEmail'], company['contactPhone']))
     
     company_id = cursor.lastrowid

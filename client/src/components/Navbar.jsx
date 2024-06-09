@@ -1,4 +1,4 @@
-import logo from '../assets/images/logo.png';
+import logo from '../assets/images/find_job_logo.png';
 import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
@@ -18,10 +18,10 @@ const Navbar = () => {
 							<img
 								className='h-10 w-auto'
 								src={logo}
-								alt='React Jobs'
+								alt='Job Finder'
 							/>
 							<span className='hidden md:block text-white text-2xl font-bold ml-2'>
-								React Jobs
+								Jobs Finder
 							</span>
 						</NavLink>
 						<div className='md:ml-auto'>

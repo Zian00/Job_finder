@@ -46,49 +46,36 @@ def index():
 
 @app.route('/jobs', methods=['GET'], strict_slashes=False)
 def getAllJobs():
-    conn = get_db_connection()
-    cur = conn.cursor()
-    cur.execute('''SELECT
-                        c.name,
-                        c.description,
-                        c.contactEmail,
-                        c.contactPhone,
-                        j.id,
-                        j.title,
-                        j.type,
-                        j.location,
-                        j.description,
-                        j.salary
-                    FROM
-                        companies c
-                        join jobs j on j.companyId = c.id;''')
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('''SELECT
+                            c.name,
+                            c.companyDescription,
+                            c.contactEmail,
+                            c.contactPhone,
+                            j.id,
+                            j.title,
+                            j.type,
+                            j.location,
+                            j.description,
+                            j.salary
+                        FROM
+                            companies c
+                            join jobs j on j.companyId = c.id;''')
 
-    data = cur.fetchall()
-    data_result = []
-    for row in data:
-        print(row)
-        print(dict(row))
-        data_result.append(dict(row))
+        data = cur.fetchall()
 
-    # for row in data:
-    #     row_dict = {key: row[key] for key in row.keys()}
-    #     data_result.append(row_dict)
-    # print(data_result)
-
-
-    # for row in data:
-    #     row_dict = {}
-    #     for i, value in enumerate(row):
-    #         column_name = cur.description[i][0]
-    #         row_dict[column_name] = value
-    #     data_result.append(row_dict)
-
-    # print(data_result)
-
-
-    conn.close()
-
-    return data_result
+        data_result = []
+        for row in data:
+            data_result.append(dict(row))
+    except sqlite3.Error as error:
+        print("Failed to fetch data from database\n", error)
+    finally:
+        if conn:
+            conn.close()
+            print("The SQLite connection is closed")
+        return data_result
 
 
 @app.route('/jobs', methods=['POST'], strict_slashes=False)
@@ -102,13 +89,13 @@ def addJob():
     description = frontend_inputs["description"]
     salary = frontend_inputs["salary"]
     company_name = frontend_inputs["company"]["name"]
-    company_description = frontend_inputs["company"]["description"]
+    company_description = frontend_inputs["company"]["companyDescription"]
     company_contactEmail = frontend_inputs["company"]["contactEmail"]
     company_contactPhone = frontend_inputs["company"]["contactPhone"]
     try:
         conn = sqlite3.connect('jobs.db')
         cur = conn.cursor()
-        cur.execute('INSERT INTO companies (name, description, contactEmail, contactPhone) VALUES (?, ?, ?, ?)',
+        cur.execute('INSERT INTO companies (name, companyDescription, contactEmail, contactPhone) VALUES (?, ?, ?, ?)',
                     (company_name, company_description, company_contactEmail, company_contactPhone))
         conn.commit()
         cur.execute("SELECT id FROM companies WHERE name = ?",
@@ -141,7 +128,7 @@ def getJobById(id):
         cur = conn.cursor()
         cur.execute('''SELECT
                         c.name,
-                        c.description,
+                        c.companyDescription,
                         c.contactEmail,
                         c.contactPhone,
                         j.id,
@@ -156,11 +143,9 @@ def getJobById(id):
                     WHERE 
                         j.id = ? ;''', (id,))
         row = cur.fetchone()
-        print(row)
-        # if row:
-        #     row_dict = {key: row[key] for key in row.keys()} 
+
         row_dict = dict(row)
-        print(row_dict)
+        # print(row_dict)
 
     except sqlite3.Error as error:
         print("Failed to get job data by id\n", error)
@@ -171,6 +156,60 @@ def getJobById(id):
             return row_dict
 
 
+@app.route('/jobs/<int:id>', methods=['PUT'], strict_slashes=False)
+def updateJobById(id):
+    frontend_inputs = request.get_json()
+    
+    title = frontend_inputs["title"]
+    job_type = frontend_inputs["type"]
+    location = frontend_inputs["location"]
+    description = frontend_inputs["description"]
+    salary = frontend_inputs["salary"]
+    company_name = frontend_inputs["company"]["name"]
+    company_description = frontend_inputs["company"]["companyDescription"]
+    company_contactEmail = frontend_inputs["company"]["contactEmail"]
+    company_contactPhone = frontend_inputs["company"]["contactPhone"]
+
+    try:
+        conn = sqlite3.connect('jobs.db')
+        cur = conn.cursor()
+        cur.execute('''UPDATE companies
+                        SET name = ?, companyDescription = ?, ContactEmail = ?, ContactPhone = ?
+                        FROM jobs
+                        WHERE companies.id = jobs.companyId
+                        AND jobs.id = ?;''', (company_name, company_description, company_contactEmail, company_contactPhone, id))
+        conn.commit()
+
+        cur.execute('''UPDATE jobs
+                        SET title =?, type =?, location =?, description =?, salary =?
+                        WHERE id =?;''', (title, job_type, location, description, salary, id))
+
+        conn.commit()
+
+    except sqlite3.Error as error:
+        print("Failed to update data\n", error)
+    finally:
+        if conn:
+            conn.close()
+        print("The SQLite connection is closed")
+        return "Data updated sucessfully"
+
+
+@app.route('/jobs/<int:id>', methods=['DELETE'], strict_slashes=False)
+def deleteJobById(id):
+    try:
+        conn = sqlite3.connect('jobs.db')
+        cur = conn.cursor()
+        cur.execute('''DELETE FROM jobs WHERE id =?;''', (id,))
+        conn.commit()
+    except sqlite3.Error as error:
+        print("Failed to delete data\n", error)
+    finally:
+        if conn:
+            conn.close()
+        print("The SQLite connection is closed")
+        return "Data deleted successfully"
+    
 if __name__ == '__main__':
     create_database()
     app.run(debug=True, port=8080)

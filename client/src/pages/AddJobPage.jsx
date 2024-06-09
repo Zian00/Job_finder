@@ -25,7 +25,7 @@ const AddJobPage = ({addJobSubmit}) => {
             salary,
 			company : {
 				name : companyName,
-				description : companyDescription,
+				companyDescription : companyDescription,
                 contactEmail,
                 contactPhone
 			}
@@ -33,8 +33,8 @@ const AddJobPage = ({addJobSubmit}) => {
         }
 		// getting required data and stored in newJob then passed into addJob function in app.jsx for api call
 		addJobSubmit(newJob);
-		// toast.success('Job added successfully');
-		// return navigate('/jobs');
+		toast.success('Job added successfully');
+		return navigate('/jobs');
     }
 
 	return (

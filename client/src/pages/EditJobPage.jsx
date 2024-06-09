@@ -9,10 +9,10 @@ const EditJobPage = ({updateJobSubmit}) => {
 	const [location, setLocation] = useState(job.location);
 	const [description, setDescription] = useState(job.description);
 	const [salary, setSalary] = useState(job.salary);
-	const [companyName, setCompanyName] = useState(job.company.name);
-	const [companyDescription, setCompanyDescription] = useState(job.company.description);   
-	const [contactEmail, setContactEmail] = useState(job.company.contactEmail);
-	const [contactPhone, setContactPhone] = useState(job.company.contactPhone);
+	const [companyName, setCompanyName] = useState(job.name);
+	const [companyDescription, setCompanyDescription] = useState(job.description);   
+	const [contactEmail, setContactEmail] = useState(job.contactEmail);
+	const [contactPhone, setContactPhone] = useState(job.contactPhone);
 
     const navigate = useNavigate();
     const {id} = useParams();
@@ -29,7 +29,7 @@ const EditJobPage = ({updateJobSubmit}) => {
             salary,
 			company : {
 				name : companyName,
-				description : companyDescription,
+				companyDescription : companyDescription,
                 contactEmail,
                 contactPhone
 			}

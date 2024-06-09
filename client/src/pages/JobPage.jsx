@@ -81,7 +81,7 @@ const JobPage = ({ deleteJob }) => {
 
 								<p className='my-2'>
 									{/* {job.company.description} */}
-									{job.description}
+									{job.companyDescription}
 								</p>
 
 								<hr className='my-4' />
