@@ -3,7 +3,7 @@ if need the original server<br>
 "server": "json-server --watch src/jobs.json --port 8000" -->
 
 # Job Finder
-#### Video Demo:  <URL HERE>
+#### Video Demo:  <[Job Finder](https://youtu.be/zFZRRQ91who)>
 #### Description:
 
 <b><em>Special thanks to <a href="https://www.youtube.com/@TraversyMedia">Traversy Media</a> for the beginner tutorial of React frontend.</em></b>
