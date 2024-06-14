@@ -84,17 +84,17 @@ After installing, run `npm run dev` to start the frontend application
 <br>
 <h2>Introduction to the project:</h2>
 
-![Homepage](/screenshots/homepage.png)
+![Homepage](screenshots/homepage.png)
 When both terminals are connected, the web application is running and you will see the above page.<br><br>
 
-![Navbar](/screenshots/navbar.png)<br>
+![Navbar](screenshots/navbar.png)<br>
 Here's the navigtion bar:
 1. Directing to home page
 2. Directing to jobs page, which shows all jobs available
 3. Directing to Add job page, where user can add new job
 <br><br>
 
-![HomepageButtons](/screenshots/homepageButtons.png)<br>
+![HomepageButtons](screenshots/homepageButtons.png)<br>
 Here's few buttons to interact with:<br>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4. Directing to jobs page
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5. Directing to Add job page
@@ -102,18 +102,18 @@ Here's few buttons to interact with:<br>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7. Directing to jobs page
 <br><br>
 
-![jobPageButons](/screenshots/jobPageButons.png)
+![jobPageButons](screenshots/jobPageButons.png)
 Once in selected job page, user is allowed to :
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8. Go back to home page
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9. Directing to edit page for editing the selected job
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10. shows a browser prompt asking user whether he wanted to delete the selected job. If deleted, data will be removed in database
 <br><br>
 
-![editJobPage](/screenshots/editJobPage.png)
+![editJobPage](screenshots/editJobPage.png)
 Edit job page shows a form with pre-filled data of the selected job. User is allowed to edit the data and press the `Update Job` button to submit and data will be modified accordingly.
 <br><br>
 
-![addJobPage](/screenshots/addJobPage.png)
+![addJobPage](screenshots/addJobPage.png)
 Similar to `editJobPage` form, addJob Page allows user to insert new jobs to the database by clicking on the `Add Job` button. Default validation provided by the web browser is implemented also. 
 
 
