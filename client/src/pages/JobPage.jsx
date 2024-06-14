@@ -37,7 +37,9 @@ const JobPage = ({ deleteJob }) => {
 			<section className='bg-indigo-50'>
 				<div className='container m-auto py-10 px-6'>
 					<div className='grid grid-cols-1 md:grid-cols-4 w-full gap-6'>
+					{/* <div className='grid grid-cols-1 md:grid-cols-70/30 w-full gap-6'> */}
 						<main className='md:col-span-3'>
+						{/* <main> */}
 							<div className='bg-white p-6 rounded-lg shadow-md text-center md:text-left '>
 								<div className='text-gray-500 mb-4'>
 									{job.type}
