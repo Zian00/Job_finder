@@ -1,6 +1,6 @@
-<b>In package.json</b><br>
+<!-- <b>In package.json</b><br>
 if need the original server<br>
-"server": "json-server --watch src/jobs.json --port 8000"
+"server": "json-server --watch src/jobs.json --port 8000" -->
 
 # Job Finder
 #### Video Demo:  <URL HERE>
