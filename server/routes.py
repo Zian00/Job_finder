@@ -44,6 +44,39 @@ def index():
     return "API is working"
 
 
+@app.route('/3jobs', methods=['GET'], strict_slashes=False)
+def getThreeJobs():
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('''SELECT
+                            c.name,
+                            c.companyDescription,
+                            c.contactEmail,
+                            c.contactPhone,
+                            j.id,
+                            j.title,
+                            j.type,
+                            j.location,
+                            j.description,
+                            j.salary
+                        FROM
+                            companies c
+                            join jobs j on j.companyId = c.id
+                        LIMIT 3;''')
+        data = cur.fetchall()
+
+        data_result = []
+        for row in data:
+            data_result.append(dict(row))
+    except sqlite3.Error as error:
+        print("Failed to fetch data from database\n", error)
+    finally:
+        if conn:
+            conn.close()
+            print("The SQLite connection is closed")
+        return data_result
+
 @app.route('/jobs', methods=['GET'], strict_slashes=False)
 def getAllJobs():
     try:
